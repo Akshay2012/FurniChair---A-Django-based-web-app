@@ -1,0 +1,27 @@
+{% extends 'ehome/base.html' %} {% block content %}
+<br />
+<div class="container">
+  <div class="row">
+    {% for product in object_list %}
+    <div class="col-xs-12 col-md-4">
+      <div class=" card" style="width: 18rem;">
+        <img
+          src="{{ product.imgurl }}"
+          class="card-img-top"
+          alt="..."
+          style="width:100%; height:20rem"
+        />
+        <div class="card-body">
+          <h5 class="card-title mt-1">
+            {{ product.name }} - <span class="h6">Rs {{ product.cost }}</span>
+          </h5>
+          <a href="#" class="btn btn-primary">Add to Cart</a>
+          <a href="#" class="btn btn-warning ">Add to Wishlist</a>
+        </div>
+      </div>
+      <br />
+    </div>
+    {% endfor %}
+  </div>
+  {% endblock %}
+</div>
