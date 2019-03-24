@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div class="row">
+    <table class="table text-center">
+      <tr class="text-center">
+        <th>Item</th>
+        <th>Price</th>
+      </tr>
+      {% for product in order.get_cart_items %}
+      <tr>
+        <td>
+          {{ product.product.name }}
+          <span class="pull-right">
+            <a href="{% url 'cart:delete_item' %}"
+              ><i class="fas fa-trash"></i
+            ></a>
+          </span>
+        </td>
+        <td>{{ product.product.cost }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3">
+          No products added yet!
+        </td>
+      </tr>
+      {% endfor %}
+      <tr>
+        {% if order.get_cart_total != None %}
+        <td colspan="2">
+          <p class="pull-right">
+            Order Total :
+          </p>
+        </td>
+        <td colspan="1">Rs {{ order.get_cart_total }}</td>
+        {% endif %}
+      </tr>
+    </table>
+
+    <a href="{% url 'ehome:shop' %}" class="btn btn-warning pull-left">
+      {% if order %}Continue Shopping{% else %}Add Items to Cart {% endif %}
+    </a>
+  </div>
+</div>
+{% endblock %}
