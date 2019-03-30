@@ -1,4 +1,5 @@
-{% extends 'ehome/base.html' %} {% block content %}
+{% extends 'base.html' %} {% block content %}
+{{ message }}
 <br />
 <div class="container">
   <div class="row">
@@ -15,7 +16,18 @@
           <h5 class="card-title mt-1">
             {{ product.name }} - <span class="h6">Rs {{ product.cost }}</span>
           </h5>
-          <a href="#" class="btn btn-primary">Add to Cart</a>
+          {% if product in current_order_products %}
+          <a href="{% url 'cart:summary'%}" class="btn btn-primary"
+            >Go to Cart</a
+          >
+          {% else %}
+          <a
+            href="{% url 'cart:add_to_cart' product.id %}"
+            class="btn btn-primary"
+            >Add to Cart</a
+          >
+          {% endif %}
+
           <a href="#" class="btn btn-warning ">Add to Wishlist</a>
         </div>
       </div>

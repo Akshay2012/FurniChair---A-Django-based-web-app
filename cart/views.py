@@ -16,15 +16,33 @@ def get_user_pending_order(request):
     return 
 
 @login_required()
-def add_to_cart(request,**kwargs):
+def add_to_cart(request,pk):
     user_profile = get_object_or_404(Profile,user=request.user)
-    product = Product.objects.filter(id=kwargs.get('item_id', "")).first()
-    if product in request.user.profile.items.all():
-        messages.info(request, 'This item has been purchased earlier!')
-        return redirect(reverse('ehome:shop'))
-    order_item , status = OrderItem.objects.get_or_create(product=product)
-    user_order , status = Order.objects.get_or_create(owner=user_profile,is_ordered=False)
-    messages.info(request,"This product has been added to the cart!")
+    try:
+        product = Product.objects.get(id=pk)
+        if product in user_profile.items.all():
+            messages.info(request, 'This item has been purchased earlier!')
+            return redirect(reverse('ehome:shop'))
+        # order_item  = OrderItem.objects.get_or_create(product=product)[0]
+        order_item = OrderItem.objects.filter(product=product)
+        if len(order_item) == 0:
+            order_item = OrderItem(product=product)
+            order_item.save()
+            order_item = [order_item]
+        # user_order  = Order.objects.get_or_create(owner=user_profile,is_ordered=False)[0]
+        try:
+            user_order  = Order.objects.get(owner=user_profile,is_ordered=False)
+        except Order.DoesNotExist:
+            user_order  = Order(owner=user_profile)
+            user_order.save()
+        for item in order_item:
+            user_order.items.add(item)
+            user_profile.items.add(item.product)
+        user_order.save()
+        user_profile.save()
+        messages.info(request,"This product has been added to the cart!")
+    except Product.DoesNotExist:
+        messages.info(request,"Product Not Found")
     return redirect(reverse('ehome:shop'))
 
 @login_required()

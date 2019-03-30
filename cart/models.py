@@ -3,6 +3,11 @@ from accounts.models import Profile
 from ehome.models import Product
 
 # Create your models here.
+
+# class OrderManager(models.Manager):
+#     def get_or_create(self,*args, **kwargs):
+
+
 class OrderItem(models.Model):
     product = models.OneToOneField(Product, on_delete=models.SET_NULL,null = True)
     is_ordered = models.BooleanField(default=False)
@@ -11,6 +16,8 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return self.product.name
+
+
 
 class Order(models.Model):
     ref_code = models.CharField(max_length=15)
@@ -25,7 +32,5 @@ class Order(models.Model):
     def get_cart_total(self):
         return sum([item.product.cost for item in self.items.all()])
 
-    def __str__(self):
-        return self.owner
         
 

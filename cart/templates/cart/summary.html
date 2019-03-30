@@ -11,8 +11,8 @@
         <td>
           {{ product.product.name }}
           <span class="pull-right">
-            <a href="{% url 'cart:delete_item' %}"
-              ><i class="fas fa-trash"></i
+            <a href="{% url 'cart:delete_item' product.id %}"
+              >Remove<i class="fa fa-trash"></i
             ></a>
           </span>
         </td>
