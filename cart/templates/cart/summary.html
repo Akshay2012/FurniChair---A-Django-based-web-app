@@ -1,5 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
+  <h3 class="text-center mt-2">Order Summary</h3>
+  <br />
   <div class="row">
     <table class="table text-center">
       <tr class="text-center">
@@ -37,9 +39,10 @@
       </tr>
     </table>
 
-    <a href="{% url 'ehome:shop' %}" class="btn btn-warning pull-left">
-      {% if order %}Continue Shopping{% else %}Add Items to Cart {% endif %}
+    <a href="{% url 'ehome:shop' %}" class="btn btn-warning pull-left ">
+      Continue Shopping
     </a>
+    <a href="{% url 'cart:mail' %}" class="btn btn-primary ml-2">Checkout</a>
   </div>
 </div>
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Product
+from .forms import CreateProduct
 from cart.models import Order
 # Create your views here.
 def index(request):
@@ -19,3 +20,9 @@ def shop(request):
         'current_order_products': current_order_products
     }
     return render(request,'ehome/shop.html',context)
+
+def create_product(request):
+    form = CreateProduct(request.POST)
+    if form.is_valid():
+        form.save()
+    return render(request, "ehome/create_product.html",{'form':form})        

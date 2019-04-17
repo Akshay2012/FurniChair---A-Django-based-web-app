@@ -6,8 +6,12 @@ from django.contrib import messages
 from accounts.models import Profile
 from ehome.models import Product
 from .models import Order, OrderItem
-   
+from django.core.mail import send_mail   
 # Create your views here.
+
+def index(request):
+    return render(request,'cart/home.html')
+
 def get_user_pending_order(request):
     user_profile = get_object_or_404(Profile,user=request.user)
     order = Order.objects.filter(owner=user_profile,is_ordered=False)
@@ -23,13 +27,11 @@ def add_to_cart(request,pk):
         if product in user_profile.items.all():
             messages.info(request, 'This item has been purchased earlier!')
             return redirect(reverse('ehome:shop'))
-        # order_item  = OrderItem.objects.get_or_create(product=product)[0]
         order_item = OrderItem.objects.filter(product=product)
         if len(order_item) == 0:
             order_item = OrderItem(product=product)
             order_item.save()
             order_item = [order_item]
-        # user_order  = Order.objects.get_or_create(owner=user_profile,is_ordered=False)[0]
         try:
             user_order  = Order.objects.get(owner=user_profile,is_ordered=False)
         except Order.DoesNotExist:
@@ -57,3 +59,18 @@ def delete_from_cart(request,pk):
 def order_details(request,**kwargs):
     current_order = get_user_pending_order(request) 
     return render(request, 'cart/summary.html',{'order':current_order})   
+
+@login_required()
+def sendmail(request):
+    subject = 'Greetings from Furnichair!'
+    msg = """
+        Thank you for purchasing from FurniChair!
+    """
+    send_mail(
+        'Greetings from FurniChair!',
+        'Thank you for purchasing from FurniChair!',
+        'shah.ayush100@gmail.com',
+        ['akshayagrawal705@gmail.com',settings.EMAIL_HOST_USER],
+        fail_silently=False
+    )
+    return render(request,'cart/thank.html')

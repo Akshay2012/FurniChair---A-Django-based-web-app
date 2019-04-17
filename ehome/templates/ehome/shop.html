@@ -5,7 +5,7 @@
   <div class="row">
     {% for product in object_list %}
     <div class="col-xs-12 col-sm-8 col-md-4">
-      <div class=" card" style="width: 18rem;">
+      <div class=" card  " style="width: 18rem;">
         <img
           src="{{ product.imgurl }}"
           class="card-img-top"
@@ -28,7 +28,7 @@
           >
           {% endif %}
 
-          <a href="#" class="btn btn-warning ">Add to Wishlist</a>
+          <a href="{% url 'ehome:shop' %}" class="btn btn-warning">Home Page</a>
         </div>
       </div>
       <br />

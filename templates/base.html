@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Shop here!</title>
     <!-- Bootstrap CSS and JS -->
+
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -27,7 +28,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">FurniChair</a>
+      <a class="navbar-brand" href="{% url 'ehome:shop' %}">FurniChair</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -41,15 +42,25 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto ">
-          <li class="nav-item active">
-            <a class="nav-link" href="#"
+        <ul class="navbar-nav mr-sm-2 ">
+          <li class="nav-item nav active">
+            <a class="nav-link" href="{% url 'ehome:shop' %}"
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+          <li class="nav-item nav active">
+            <a class="nav-link" href="{% url 'ehome:shop' %}"
+              >Shop <span class="sr-only">(current)</span></a
+            >
           </li>
+          <li class="nav-item nav active">
+            <a class="nav-link" href="{% url 'cart:summary' %}"
+              >Cart <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li> -->
         </ul>
       </div>
     </nav>

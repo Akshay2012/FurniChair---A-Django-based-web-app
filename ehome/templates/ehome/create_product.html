@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-3">
+  <div class="jumbotron">
+    <div class="container">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="imgurl" class="mr-2">Enter the ImgUrl: </label>
+          {{ form.imgurl }}
+        </div>
+        <div class="form-group">
+          <label for="productname" class="mr-2">Enter the Name:</label>
+          {{ form.name }}
+        </div>
+        <div class="form-group">
+          <label for="cost" class="mr-2">Enter the Cost:</label>
+          {{ form.cost }}
+        </div>
+        <!-- {{ form.as_p }} -->
+        <input type="submit" class="btn btn-primary" value="Create" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
